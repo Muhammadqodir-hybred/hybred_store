@@ -1,2 +1,2 @@
-# hybred_store
+HYBRED Shop
 Online store
