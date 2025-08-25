@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat ID olish</title>
+</head>
+<body>
+  <h2>Telegram Chat ID olish</h2>
+  <input type="text" id="token" placeholder="Bot tokenni yozing">
+  <button onclick="getChatId()">Chat ID ni olish</button>
+  <p id="result"></p>
+
+  <script>
+    async function getChatId() {
+      const token = document.getElementById("token").value.trim();
+      if (!token) {
+        alert("Tokenni yozing!");
+        return;
+      }
+
+      try {
+        let res = await fetch(`https://api.telegram.org/bot${token}/getUpdates`);
+        let data = await res.json();
+
+        if (data.result.length > 0) {
+          let chatId = data.result[0].message.chat.id;
+          document.getElementById("result").innerText = "Sening Chat ID: " + chatId;
+        } else {
+          document.getElementById("result").innerText = 
+            "Hech qanday chat topilmadi. Botga /start deb yozib keyin urinib ko‘r!";
+        }
+      } catch (e) {
+        document.getElementById("result").innerText = "Xato: " + e;
+      }
+    }
+  </script>
+</body>
+</html>
